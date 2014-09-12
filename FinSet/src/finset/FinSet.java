@@ -49,27 +49,57 @@ public class FinSet {
         return new FinSet(newSet);
     }
     
-    //not working
+    //working! forgot that add returns a new FinSet! duh!
     public FinSet remove(int elt){
-        FinSet newSet = new FinSet();
+        
         if (this.member(elt)){
-            
+            FinSet newSet = new FinSet();
             for(int i = 0;i<this.cardinality();i++){
              if(this.set[i] != elt){
-             newSet.add(this.set[i]);
+             newSet = newSet.add(this.set[i]);
              }
+             
             }
+            return newSet;
+    
+        }
+      
+        else{return this;}
+    }
+    
+    //I hope this isn't too contrived
         
-        return newSet;
-    
-    }
-        return this;
-    }
-    
-    //dummy method
     public FinSet union(FinSet u){
-        return this;
+        FinSet newSet = new FinSet();
+        //note to self, have case for if numbers are equal
+        for(int i = 0; i < this.cardinality(); i++){
+            while(! u.isEmptyHuh())
+                {
+                //if u[0] is smaller, add it and remove it
+                if(u.set[0] < this.set[i]){
+                    newSet = newSet.add(u.set[0]);
+                    u = u.remove(u.set[0]);
+                }
+                //otherwise break
+                else{break;}
+            }
+            //if the two numbers are equal, remove it from this and decrement
+            //to balance out the next increment
+            if(!u.isEmptyHuh() && u.set[0] == this.set[i]){
+                this.set = this.remove(this.set[i]).set;
+                i--;
+            }
+            //else add the item of this set 
+            else{newSet = newSet.add(this.set[i]);}
+        }
+       //adds the rest of u, which should be greater than anything in this
+       for(int i = 0; i < u.cardinality(); i++){
+            newSet = newSet.add(u.set[i]);
+        }
+        return newSet;
     }
+        
+    
     
     //dummy method
     public FinSet inter(FinSet u){
@@ -150,11 +180,11 @@ public class FinSet {
     System.out.println("  "+Arrays.toString(arbitrarySet14.remove(90000).set) + " should be " + Arrays.toString(new int[]{2,74}));
 //check union
     System.out.println("Check union");
-    System.out.println("  "+Arrays.toString(arbitrarySet16.union(arbitrarySet18).set) + " should be " + Arrays.toString(new int[]{11,22,33,74,2}));
+    System.out.println("  "+Arrays.toString(arbitrarySet16.union(arbitrarySet18).set) + " should be " + Arrays.toString(new int[]{2,11,22,33,74}));
     System.out.println("  "+Arrays.toString(arbitrarySet16.union(emptyFinSet).set) + " should be " + Arrays.toString(new int[]{11,22,33}));
     System.out.println("  "+Arrays.toString(arbitrarySet19.union(arbitrarySet20).set) + " should be " + Arrays.toString(new int[]{1,3,5,7,9,11}));
     System.out.println("  "+Arrays.toString(arbitrarySet20.union(arbitrarySet19).set) + " should be " + Arrays.toString(new int[]{1,3,5,7,9,11}));
- //check inter
+//check inter
     System.out.println("Check inter");
     System.out.println("  "+Arrays.toString(arbitrarySet16.inter(arbitrarySet18).set) + " should be " + Arrays.toString(new int[]{}));
     System.out.println("  "+Arrays.toString(arbitrarySet16.inter(emptyFinSet).set) + " should be " + Arrays.toString(new int[]{}));
