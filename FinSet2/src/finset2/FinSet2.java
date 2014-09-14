@@ -1,19 +1,43 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package finset2;
+import java.util.Random;
 
 public class FinSet2 {
 
+    static Random rand = new Random();
+    public static int randomInt( int min, int max ) {
+        return rand.nextInt((max - min) + 1) + min; }
+
+
     
-    public static void testUnion(BiTr u1, BiTr u2){
-        //for two random sets, run through member from 1 to 100,
-        //u1 and union should all be true
-        //u2 and union should all be true
+    //Tests that for any integer that is in set1 or set2 should be in the union
+    //of the two sets
+    public static void checkUnion(int reps){
+        for(int i = 0; i < reps; i++){
+            
+        BiTr RandomTree1 = new Leaf();
+        BiTr RandomTree2 = new Leaf();
+        
+        for(int j = 0; j < 40; j++){
+            RandomTree1.add(randomInt(0,100));
+         }
+        
+        for(int j = 0; j < 40; j++){
+            RandomTree2.add(randomInt(0,100));
+         }
+        
+        BiTr UnionTree = RandomTree1.union(RandomTree2);
+        
+        for(int j = 0; j < 100; j++){
+        if((RandomTree1.member(j)!= UnionTree.member(i))||(RandomTree2.member(i)!= UnionTree.member(i))){
+            System.out.println("Back to the Drawing Board Tom");
+        }
+        }
+        
+        }
     }
+    
+    
   
     public static void main(String[] args) {
         //Get it?  Because arbor... arbitrary... tree...
@@ -50,10 +74,15 @@ public class FinSet2 {
         System.out.println(Arbortrary1.add(12).cardinality() + " should be " + (Arbortrary1.cardinality()+1));
         System.out.println(Arbortrary1.add(3).cardinality() + " should be " + Arbortrary1.cardinality());
         
+        
+        
         //Test remove
         System.out.println("    remove Test");
-        System.out.println(Arbortrary1.add(6).cardinality() + " should be " + Arbortrary1v2.cardinality());
+        System.out.println(Arbortrary1.remove(7).member(7) + " should be " + !Arbortrary1.member(7));
+        //checks that remove doesn't affect Arbortrary1
+        System.out.println(Arbortrary1.member(7) + " should be " + true);
         
+        checkUnion(10);
     }
     
 }

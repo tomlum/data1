@@ -4,7 +4,7 @@ package finset2;
 
 public interface BiTr {
     
-    int node;
+    
     public BiTr empty();
     public int cardinality();
     public boolean isEmptyHuh();

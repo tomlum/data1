@@ -52,24 +52,16 @@ public class Branch implements BiTr{
     
     //still requires union
     public BiTr remove(int elt){
-        Branch newTree = new Branch(this.node,this.le,this.ri);
-        if(newTree.node == elt){
-            return (newTree.le.union(newTree.ri));
+        if(this.node == elt){
+            return this.le.union(this.ri);
             }
-        else{if(this.le.member(elt)){
-                this.le = this.le.remove(elt);}
-            else{if(this.ri.member(elt)){
-                this.ri = this.le.remove(elt);}
-                }
-            }    
-        return newTree;
+        return new Branch(this.node,this.le.remove(elt),this.ri.remove(elt));
         }
     
-    
-    
+    //I FINALLY GOT IT!!!!!!!!!!!!!
+    //I kind of hate how simple this is, I spent so long throwing stuff at
+    //the wall until this stuck
     public BiTr union(BiTr u){
-        Branch newTree = new Branch(this.node,this.le,this.ri);
-        return newTree;
-    }
+        return u.add(this.node).union(this.le).union(this.ri);}
     
 }
