@@ -28,8 +28,24 @@ public class FinSet2 {
         
         BiTr UnionTree = RandomTree1.union(RandomTree2);
         
-        for(int j = 0; j < range; j++){
+        for(int j = 0; j <= range; j++){
         if(UnionTree.member(j) != (RandomTree1.member(j)||RandomTree2.member(j))){
+            System.out.println("Back to the Drawing Board Tom, fix Union");
+        }
+        }
+        }
+    }
+    
+    public static void checkTransitive(int reps){
+        for(int i = 0; i < reps; i++){
+            
+        BiTr RandomTree1 = randomTree(0,10,100);
+        BiTr RandomTree2 = randomTree(0,20,100);
+        BiTr RandomTree3 = randomTree(0,50,150);
+        
+        for(int j = 0; j <= 100; j++){
+          
+        if((RandomTree1.subset(RandomTree2) && RandomTree2.subset(RandomTree3))&&!(RandomTree1.subset(RandomTree3))){
             System.out.println("Back to the Drawing Board Tom");
         }
         }
@@ -45,9 +61,9 @@ public class FinSet2 {
         
         BiTr InterTree = RandomTree1.inter(RandomTree2);
         
-        for(int j = 0; j < range; j++){
-        if((RandomTree1.member(j) == RandomTree2.member(j)) != InterTree.member(j)){
-            System.out.println("Back to the Drawing Board Tom");
+        for(int j = 0; j <= range; j++){
+        if((RandomTree1.member(j) && RandomTree2.member(j)) != InterTree.member(j)){
+            System.out.println("Back to the Drawing Board Tom, fix Inter");
         }
         }
         
@@ -61,12 +77,12 @@ public class FinSet2 {
         BiTr RandomTree1 = randomTree(0,range,40);
         BiTr RandomTree2 = randomTree(0,range,40);
         
-        BiTr InterTree = RandomTree1.inter(RandomTree2);
         BiTr DiffTree = RandomTree1.diff(RandomTree2);
         
-        for(int j = 0; j < range; j++){
-        if((RandomTree1.member(j) == !RandomTree2.member(j)) && InterTree.member(j)){
-            System.out.println("Back to the Drawing Board Tom");
+        
+        for(int j = 0; j <= range; j++){
+        if(RandomTree1.member(j) && RandomTree2.member(j) && DiffTree.member(j)){
+            System.out.println("Back to the Drawing Board Tom, fix Diff");
         }
         }
         
@@ -76,26 +92,27 @@ public class FinSet2 {
      public static void checkSubset(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,50);
-        BiTr RandomTree2 = randomTree(0,range,50);
+        BiTr RandomTree1 = randomTree(0,range,5);
+        BiTr RandomTree2 = randomTree(0,range,100);
         
         BiTr InterTree = RandomTree1.inter(RandomTree2);
         boolean deFactoSubsetOfTrees = RandomTree1.subset(RandomTree2);
         boolean deJureSubsetOfTrees = true;
-        for(int j = 0; j < range; j++){
+        for(int j = 0; j <= range; j++){
             if(RandomTree1.member(j) != InterTree.member(j)){
                 deJureSubsetOfTrees = false;
             }
         }
         
-        if(!deJureSubsetOfTrees){
-            System.out.println("was not a subset");
-        }
         
-        System.out.println(InterTree.cardinality()+" "+deJureSubsetOfTrees + " " + deFactoSubsetOfTrees);
+        ////uncomment for to show that the function is creating SubSets
+        //System.out.println(InterTree.cardinality()+" "+RandomTree1.cardinality()+" "+deJureSubsetOfTrees + " " + deFactoSubsetOfTrees);
         
         if(deJureSubsetOfTrees != deFactoSubsetOfTrees){
-            System.out.println("Back to the Drawing Board Tom");
+            System.out.println("Back to the Drawing Board Tom, fix Subset");
+            System.out.println(RandomTree1.cardinality()+" "+InterTree.cardinality()+deJureSubsetOfTrees+deFactoSubsetOfTrees);
+            
+            
         }
         
         }
@@ -163,16 +180,24 @@ public class FinSet2 {
         System.out.println(Arbortrary1.inter(Arbortrary1v3).member(7) + " should be " + true);
         System.out.println(Arbortrary1.inter(Arbortrary1v3).member(100) + " should be " + false);
         System.out.println(Arbortrary1.inter(Arbortrary1v3).member(4) + " should be " + false);
+        //Test Equal
+        System.out.println("    equal Test");
+        System.out.println(EmpTree.equal(EmpTree) + " should be " + true);
+        System.out.println(EmpTree.equal(Arbortrary1v2) + " should be " + false);
+        System.out.println(Arbortrary1.add(6).equal(Arbortrary1v2) + " should be " + true);
+        System.out.println(Arbortrary1v2.equal(Arbortrary1) + " should be " + false);
         //Test Subset
         System.out.println("    subset Test");
+        System.out.println(EmpTree.subset(EmpTree) + " should be " + true);
         System.out.println(EmpTree.subset(Arbortrary1v2) + " should be " + true);
         System.out.println(Arbortrary1.subset(Arbortrary1v2) + " should be " + true);
         System.out.println(Arbortrary1v2.subset(Arbortrary1) + " should be " + false);
        
-        checkUnion(10,10);
-        checkInter(10,100);
-        //checkDiff(10,100);
-        //checkSubset(10,100);
+        checkUnion(100,10);
+        checkInter(100,100);
+        checkDiff(100,100);
+        checkSubset(100,30);
+        checkTransitive(100);
        
         
     }
