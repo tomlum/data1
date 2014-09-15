@@ -33,7 +33,25 @@ public class Leaf implements BiTr{
     public BiTr union(BiTr u){
         return u;
     }
+    
+    public BiTr inter(BiTr u){
+        return new Leaf();
+    }
+    
+    public BiTr diff(BiTr u){
+        return new Leaf();
+    }
+    
+    public boolean equal(BiTr u){
+        if(u.isEmptyHuh()){
+            return true;
+        }
+        return false;
+    }
    
+    public boolean subset(BiTr u){
+        return true;
+    }
     
     
 }

@@ -58,10 +58,38 @@ public class Branch implements BiTr{
         return new Branch(this.node,this.le.remove(elt),this.ri.remove(elt));
         }
     
-    //I FINALLY GOT IT!!!!!!!!!!!!!
-    //I kind of hate how simple this is, I spent so long throwing stuff at
-    //the wall until this stuck
-    public BiTr union(BiTr u){
-        return u.add(this.node).union(this.le).union(this.ri);}
     
+    public BiTr union(BiTr u){
+        return this.le.union(this.ri.union(u)).add(node);
+    }
+    
+    public BiTr inter(BiTr u){
+        if(u.member(this.node)){
+        return new Branch(this.node, this.le.inter(u), this.ri.inter(u));}
+        else{
+    return this.le.inter(u).union(this.ri.inter(u));}
+    
+    }
+    
+    public BiTr diff(BiTr u){
+        if(!u.member(this.node)){
+        return new Branch(this.node, this.le.diff(u), this.ri.diff(u));}
+        else{
+    return this.le.diff(u).union(this.ri.diff(u));}
+    }
+    
+    public boolean equal(BiTr u){
+         if(this.subset(u)&&u.subset(this)){
+             return true;
+         }
+         return false;
+    }
+    
+    
+    public boolean subset(BiTr u){
+         if(u.member(this.node)){
+             return(this.le.subset(u)&&this.ri.subset(u));
+         }
+         else{return false;}
+    }
 }
