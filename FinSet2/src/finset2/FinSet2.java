@@ -36,6 +36,8 @@ public class FinSet2 {
         }
     }
     
+    //Checks that if A is a subset of B, B is a Subset of C
+    //A is a subset of C
     public static void checkTransitive(int reps){
         for(int i = 0; i < reps; i++){
             
@@ -49,6 +51,75 @@ public class FinSet2 {
             System.out.println("Back to the Drawing Board Tom");
         }
         }
+        }
+    }
+    
+   
+    
+    //If the tree is the same after removing and adding j
+    //then j was a member of the original tree
+    public static void checkProperty2(int reps, int range){
+        for(int i = 0; i < reps; i++){
+            
+        BiTr RandomTree1 = randomTree(0,range,40);
+        
+        
+        for(int j = 0; j <= range; j++){
+        if(RandomTree1.equal(RandomTree1.remove(j).add(j)) != RandomTree1.member(j)){
+            System.out.println("Back to the Drawing Board Tom, fix checkPropert2");
+        }
+        }
+        
+        }
+    }
+    
+    //If a value is a member of the difference of the first and second tree
+    //or the difference of the second and first tree, it should not be
+    //a value of the intersection of the trees
+    public static void checkProperty3(int reps, int range){
+        for(int i = 0; i < reps; i++){
+            
+        BiTr RandomTree1 = randomTree(0,range,40);
+        BiTr RandomTree2 = randomTree(0,range,40);
+        BiTr InterTree = RandomTree1.inter(RandomTree2);
+        BiTr UnionTree = RandomTree1.union(RandomTree2);
+        BiTr DiffTree = RandomTree1.diff(RandomTree2);
+        BiTr DiffTree2 = RandomTree2.diff(RandomTree1);
+        
+        
+        for(int j = 0; j <= range; j++){
+        if((DiffTree.member(j)||DiffTree2.member(j))&&InterTree.member(j)){
+            System.out.println("Back to the Drawing Board Tom, fix checkProperty3");
+        }
+        }
+        
+        }
+    }
+    
+    //Union of the Intersection of Trees and the Difference of both 
+    //should be equal to the Union of both Trees.
+    //As well, all members of the the Union of the Intersection and Differences
+    //should be a member of the Union of both trees
+    public static void checkProperty4(int reps, int range){
+        for(int i = 0; i < reps; i++){
+            
+        BiTr RandomTree1 = randomTree(0,range,40);
+        BiTr RandomTree2 = randomTree(0,range,40);
+        BiTr InterTree = RandomTree1.inter(RandomTree2);
+        BiTr UnionTree = RandomTree1.union(RandomTree2);
+        BiTr DiffTree = RandomTree1.diff(RandomTree2);
+        BiTr DiffTree2 = RandomTree2.diff(RandomTree1);
+        
+        
+        for(int j = 0; j <= range; j++){
+        if(!DiffTree.union(DiffTree2).union(InterTree).equal(UnionTree)){
+            System.out.println("Back to the Drawing Board Tom, fix checkProperty4");
+        }
+        if(!DiffTree.union(DiffTree2).union(InterTree).member(j) == UnionTree.member(j)){
+            System.out.println("Back to the Drawing Board Tom, fix checkProperty4");
+        }
+        }
+        
         }
     }
     
@@ -69,7 +140,6 @@ public class FinSet2 {
         
         }
     }
-    
     
     public static void checkDiff(int reps, int range){
         for(int i = 0; i < reps; i++){
@@ -198,6 +268,9 @@ public class FinSet2 {
         checkDiff(100,100);
         checkSubset(100,30);
         checkTransitive(100);
+        checkProperty2(10,100);
+        checkProperty3(10,100);
+        checkProperty4(10,100);
        
         
     }
