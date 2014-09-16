@@ -36,6 +36,22 @@ public class FinSet2 {
         }
     }
     
+    public static void checkRandom(){
+        for(int i = 0; i < 100; i++){
+            
+        BiTr RandomTree1 = randomTree(0,30,20);
+        
+        
+        for(int j = 0; j <= 30; j++){
+        if(RandomTree1.remove(j).member(j)){
+            System.out.println("Back to the Drawing Board Tom, these aren't BSTs");
+        }
+        }
+        }
+    }
+    
+    
+    
     //Checks that if A is a subset of B, B is a Subset of C
     //A is a subset of C
     public static void checkTransitive(int reps){
@@ -271,6 +287,7 @@ public class FinSet2 {
         checkProperty2(10,100);
         checkProperty3(10,100);
         checkProperty4(10,100);
+        checkRandom();
        
         
     }
