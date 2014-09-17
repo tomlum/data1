@@ -7,7 +7,7 @@ public class Leaf implements BiTr{
     
     public Leaf() {}
     
-    public BiTr empty(){
+    public BiTr empty(BiTr u){
          return this;
      };
     public int cardinality(){
@@ -27,7 +27,7 @@ public class Leaf implements BiTr{
     }
     
     public BiTr remove(int elt){
-        return new Leaf();
+        return this;
     }
     
     public BiTr union(BiTr u){

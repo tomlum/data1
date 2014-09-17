@@ -1,5 +1,4 @@
 
-
 package finset2;
 
 public class Branch implements BiTr{
@@ -22,7 +21,7 @@ public class Branch implements BiTr{
         this.ri = ri;
     }
     
-    public BiTr empty(){
+    public BiTr empty(BiTr u){
          return new Leaf();
      }
     public int cardinality(){
@@ -34,20 +33,22 @@ public class Branch implements BiTr{
     }
     
     public boolean member(int elt){
-            if(this.node == elt){
-                return true;}
-            if(!this.le.member(elt)&&!this.ri.member(elt)){
-                    return false;}
+            if(elt<this.node){
+                return this.le.member(elt);
+            }
+            if(elt>this.node){
+                return this.ri.member(elt);
+            }
             return true;
+            
     }
     
     public BiTr add(int elt){
-        Branch newTree = new Branch(this.node,this.le,this.ri);
-        if(elt < newTree.node){
-            newTree.le = newTree.le.add(elt);} 
-        if(elt > newTree.node){
-            newTree.ri = newTree.ri.add(elt);}
-        return newTree;       
+        if(elt < this.node){
+             return new Branch(this.node,this.le.add(elt),this.ri);}
+        if(elt > this.node){
+            return new Branch(this.node,this.le,this.ri.add(elt));}
+        return this;       
     }
     
     //still requires union
@@ -60,7 +61,7 @@ public class Branch implements BiTr{
     
     
     public BiTr union(BiTr u){
-        return this.le.union(this.ri.union(u)).add(node);
+        return this.ri.union(this.le.union(u)).add(node);
     }
     
     public BiTr inter(BiTr u){

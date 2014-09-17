@@ -8,15 +8,20 @@ public class FinSet2 {
     public static int randomInt( int min, int max ) {
         return rand.nextInt((max - min) + 1) + min; }
     
-    public static BiTr randomTree( int min, int max, int len) {
-        BiTr RandTree = new Leaf();
-        for(int j = 0; j < len; j++){
-            RandTree = RandTree.add(randomInt(min,max));
-         }
-        return RandTree;
+    
+    
+    
+  
+    public static BiTr randomTree(int min, int max, int maxlen) {
+        if(maxlen > 0){
+            return randomTree(min,max,(maxlen-1)).add(randomInt(min,max));
+        }
+        else return new Leaf();
         }
 
 
+  
+    
     
     //Tests that for any integer that is in set1 or set2 should be in the union
     //of the two sets

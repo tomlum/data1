@@ -5,7 +5,7 @@ package finset2;
 public interface BiTr {
     
     
-    public BiTr empty();
+    public BiTr empty(BiTr u);
     public int cardinality();
     public boolean isEmptyHuh();
     public boolean member(int elt);
