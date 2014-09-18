@@ -1,11 +1,11 @@
 
 package finset2;
 
-public class Branch implements BiTr{
+public class Branch implements BiSeTr{
     
     int node;
-    BiTr le;
-    BiTr ri;
+    BiSeTr le;
+    BiSeTr ri;
     
     
     
@@ -15,15 +15,13 @@ public class Branch implements BiTr{
         this.ri = new Leaf();
     }
     
-    public Branch(int node, BiTr le, BiTr ri){
+    public Branch(int node, BiSeTr le, BiSeTr ri){
         this.node = node;
         this.le = le;
         this.ri = ri;
     }
     
-    public BiTr empty(BiTr u){
-         return new Leaf();
-     }
+    
     public int cardinality(){
         return 1 + this.ri.cardinality() + this.le.cardinality();
     }
@@ -43,7 +41,7 @@ public class Branch implements BiTr{
             
     }
     
-    public BiTr add(int elt){
+    public BiSeTr add(int elt){
         if(elt < this.node){
              return new Branch(this.node,this.le.add(elt),this.ri);}
         if(elt > this.node){
@@ -52,7 +50,7 @@ public class Branch implements BiTr{
     }
     
     //still requires union
-    public BiTr remove(int elt){
+    public BiSeTr remove(int elt){
         if(this.node == elt){
             return this.le.union(this.ri);
             }
@@ -60,11 +58,11 @@ public class Branch implements BiTr{
         }
     
     
-    public BiTr union(BiTr u){
+    public BiSeTr union(BiSeTr u){
         return this.ri.union(this.le.union(u)).add(node);
     }
     
-    public BiTr inter(BiTr u){
+    public BiSeTr inter(BiSeTr u){
         if(u.member(this.node)){
         return new Branch(this.node, this.le.inter(u), this.ri.inter(u));}
         else{
@@ -72,14 +70,14 @@ public class Branch implements BiTr{
     
     }
     
-    public BiTr diff(BiTr u){
+    public BiSeTr diff(BiSeTr u){
         if(!u.member(this.node)){
         return new Branch(this.node, this.le.diff(u), this.ri.diff(u));}
         else{
     return this.le.diff(u).union(this.ri.diff(u));}
     }
     
-    public boolean equal(BiTr u){
+    public boolean equal(BiSeTr u){
          if(this.subset(u)&&u.subset(this)){
              return true;
          }
@@ -87,7 +85,7 @@ public class Branch implements BiTr{
     }
     
     
-    public boolean subset(BiTr u){
+    public boolean subset(BiSeTr u){
          if(u.member(this.node)){
              return(this.le.subset(u)&&this.ri.subset(u));
          }

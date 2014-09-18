@@ -1,15 +1,12 @@
 
 package finset2;
 
-public class Leaf implements BiTr{
+public class Leaf implements BiSeTr{
    
-    
-    
+   
     public Leaf() {}
     
-    public BiTr empty(BiTr u){
-         return this;
-     };
+    
     public int cardinality(){
         return 0;
     };
@@ -22,34 +19,34 @@ public class Leaf implements BiTr{
         return false;
     }
     
-    public BiTr add(int elt){
+    public BiSeTr add(int elt){
         return new Branch(elt);
     }
     
-    public BiTr remove(int elt){
+    public BiSeTr remove(int elt){
         return this;
     }
     
-    public BiTr union(BiTr u){
+    public BiSeTr union(BiSeTr u){
         return u;
     }
     
-    public BiTr inter(BiTr u){
+    public BiSeTr inter(BiSeTr u){
         return new Leaf();
     }
     
-    public BiTr diff(BiTr u){
+    public BiSeTr diff(BiSeTr u){
         return new Leaf();
     }
     
-    public boolean equal(BiTr u){
+    public boolean equal(BiSeTr u){
         if(u.isEmptyHuh()){
             return true;
         }
         return false;
     }
    
-    public boolean subset(BiTr u){
+    public boolean subset(BiSeTr u){
         return true;
     }
     

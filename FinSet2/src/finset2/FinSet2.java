@@ -3,6 +3,11 @@ package finset2;
 import java.util.Random;
 
 public class FinSet2 {
+    
+//  Is here where this belongs?
+    public static BiSeTr empty(){
+        return new Leaf();
+    };
 
     static Random rand = new Random();
     public static int randomInt( int min, int max ) {
@@ -12,7 +17,7 @@ public class FinSet2 {
     
     
   
-    public static BiTr randomTree(int min, int max, int maxlen) {
+    public static BiSeTr randomTree(int min, int max, int maxlen) {
         if(maxlen > 0){
             return randomTree(min,max,(maxlen-1)).add(randomInt(min,max));
         }
@@ -20,18 +25,15 @@ public class FinSet2 {
         }
 
 
-  
-    
-    
     //Tests that for any integer that is in set1 or set2 should be in the union
     //of the two sets
     public static void checkUnion(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,15);
-        BiTr RandomTree2 = randomTree(0,range,15);
+        BiSeTr RandomTree1 = randomTree(0,range,15);
+        BiSeTr RandomTree2 = randomTree(0,range,15);
         
-        BiTr UnionTree = RandomTree1.union(RandomTree2);
+        BiSeTr UnionTree = RandomTree1.union(RandomTree2);
         
         for(int j = 0; j <= range; j++){
         if(UnionTree.member(j) != (RandomTree1.member(j)||RandomTree2.member(j))){
@@ -44,7 +46,7 @@ public class FinSet2 {
     public static void checkRandom(){
         for(int i = 0; i < 100; i++){
             
-        BiTr RandomTree1 = randomTree(0,30,20);
+        BiSeTr RandomTree1 = randomTree(0,30,20);
         
         
         for(int j = 0; j <= 30; j++){
@@ -59,12 +61,12 @@ public class FinSet2 {
     
     //Checks that if A is a subset of B, B is a Subset of C
     //A is a subset of C
-    public static void checkTransitive(int reps){
+    public static void checkSubsetTransitivity(int reps){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,10,100);
-        BiTr RandomTree2 = randomTree(0,20,100);
-        BiTr RandomTree3 = randomTree(0,50,150);
+        BiSeTr RandomTree1 = randomTree(0,10,100);
+        BiSeTr RandomTree2 = randomTree(0,20,100);
+        BiSeTr RandomTree3 = randomTree(0,50,150);
         
         for(int j = 0; j <= 100; j++){
           
@@ -77,12 +79,12 @@ public class FinSet2 {
     
    
     
-    //If the tree is the same after removing and adding j
-    //then j was a member of the original tree
+    //If the Set is the same after removing and adding j
+    //then j was a member of the original Set
     public static void checkProperty2(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree1 = randomTree(0,range,40);
         
         
         for(int j = 0; j <= range; j++){
@@ -94,18 +96,18 @@ public class FinSet2 {
         }
     }
     
-    //If a value is a member of the difference of the first and second tree
-    //or the difference of the second and first tree, it should not be
-    //a value of the intersection of the trees
+    //If a value is a member of the difference of the first and second Set
+    //or the difference of the second and first Set, it should not be
+    //a value of the intersection of the Sets
     public static void checkProperty3(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,40);
-        BiTr RandomTree2 = randomTree(0,range,40);
-        BiTr InterTree = RandomTree1.inter(RandomTree2);
-        BiTr UnionTree = RandomTree1.union(RandomTree2);
-        BiTr DiffTree = RandomTree1.diff(RandomTree2);
-        BiTr DiffTree2 = RandomTree2.diff(RandomTree1);
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr InterTree = RandomTree1.inter(RandomTree2);
+        BiSeTr UnionTree = RandomTree1.union(RandomTree2);
+        BiSeTr DiffTree = RandomTree1.diff(RandomTree2);
+        BiSeTr DiffTree2 = RandomTree2.diff(RandomTree1);
         
         
         for(int j = 0; j <= range; j++){
@@ -117,19 +119,19 @@ public class FinSet2 {
         }
     }
     
-    //Union of the Intersection of Trees and the Difference of both 
-    //should be equal to the Union of both Trees.
+    //Union of the Intersection of Sets and the Difference of both 
+    //should be equal to the Union of both Sets.
     //As well, all members of the the Union of the Intersection and Differences
-    //should be a member of the Union of both trees
+    //should be a member of the Union of both Sets
     public static void checkProperty4(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,40);
-        BiTr RandomTree2 = randomTree(0,range,40);
-        BiTr InterTree = RandomTree1.inter(RandomTree2);
-        BiTr UnionTree = RandomTree1.union(RandomTree2);
-        BiTr DiffTree = RandomTree1.diff(RandomTree2);
-        BiTr DiffTree2 = RandomTree2.diff(RandomTree1);
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr InterTree = RandomTree1.inter(RandomTree2);
+        BiSeTr UnionTree = RandomTree1.union(RandomTree2);
+        BiSeTr DiffTree = RandomTree1.diff(RandomTree2);
+        BiSeTr DiffTree2 = RandomTree2.diff(RandomTree1);
         
         
         for(int j = 0; j <= range; j++){
@@ -144,14 +146,74 @@ public class FinSet2 {
         }
     }
     
+    
+    //If x is a member of the Union of the intersecions of three random Sets,
+    //it must be a member of at least two of the Sets
+    public static void checkProperty5(int reps, int range){
+        for(int i = 0; i < reps; i++){
+            
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr RandomTree3 = randomTree(0,range,40);
+        BiSeTr InterTree12 = RandomTree1.inter(RandomTree2);
+        BiSeTr InterTree23 = RandomTree2.inter(RandomTree3);
+        BiSeTr InterTree13 = RandomTree1.inter(RandomTree3);
+        BiSeTr InterUnionTree123 = InterTree12.union(InterTree13.union(InterTree23));
+        BiSeTr InterTree123 = InterTree12.inter(InterTree13.inter(InterTree23));
+        
+        
+        for(int j = 0; j <= range; j++){
+        if(InterUnionTree123.member(j) && !(
+                (RandomTree1.member(j)&&RandomTree2.member(j))||
+                (RandomTree1.member(j)&&RandomTree3.member(j))||
+                (RandomTree2.member(j)&&RandomTree3.member(j))
+                )){
+            System.out.println("Back to the Drawing Board Tom, fix checkProperty3");
+        }
+        }
+        
+        
+        }
+    }
+    
+      //If x is a member of the intersection of all three sets, then it
+      //must also be in any intersection of any two intersecions of Sets
+      public static void checkProperty6(int reps, int range){
+        for(int i = 0; i < reps; i++){
+            
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr RandomTree3 = randomTree(0,range,40);
+        BiSeTr InterTree12 = RandomTree1.inter(RandomTree2);
+        BiSeTr InterTree23 = RandomTree2.inter(RandomTree3);
+        BiSeTr InterTree13 = RandomTree1.inter(RandomTree3);
+        BiSeTr InterUnionTree123 = InterTree12.union(InterTree13.union(InterTree23));
+        BiSeTr InterTree123 = InterTree12.inter(InterTree13.inter(InterTree23));
+        
+        
+        for(int j = 0; j <= range; j++){
+        if(InterTree123.member(j) && !(
+                InterTree12.inter(InterTree13).member(j)
+                && InterTree12.inter(InterTree23).member(j)
+                && InterTree13.inter(InterTree23).member(j)
+                
+                )){
+            System.out.println("Back to the Drawing Board Tom, fix checkProperty3");
+        }
+        }
+        
+        
+        }
+    }
+    
     public static void checkInter(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,40);
-        BiTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
         
         
-        BiTr InterTree = RandomTree1.inter(RandomTree2);
+        BiSeTr InterTree = RandomTree1.inter(RandomTree2);
         
         for(int j = 0; j <= range; j++){
         if((RandomTree1.member(j) && RandomTree2.member(j)) != InterTree.member(j)){
@@ -165,10 +227,10 @@ public class FinSet2 {
     public static void checkDiff(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,40);
-        BiTr RandomTree2 = randomTree(0,range,40);
+        BiSeTr RandomTree1 = randomTree(0,range,40);
+        BiSeTr RandomTree2 = randomTree(0,range,40);
         
-        BiTr DiffTree = RandomTree1.diff(RandomTree2);
+        BiSeTr DiffTree = RandomTree1.diff(RandomTree2);
         
         
         for(int j = 0; j <= range; j++){
@@ -183,10 +245,10 @@ public class FinSet2 {
      public static void checkSubset(int reps, int range){
         for(int i = 0; i < reps; i++){
             
-        BiTr RandomTree1 = randomTree(0,range,5);
-        BiTr RandomTree2 = randomTree(0,range,100);
+        BiSeTr RandomTree1 = randomTree(0,range,5);
+        BiSeTr RandomTree2 = randomTree(0,range,100);
         
-        BiTr InterTree = RandomTree1.inter(RandomTree2);
+        BiSeTr InterTree = RandomTree1.inter(RandomTree2);
         boolean deFactoSubsetOfTrees = RandomTree1.subset(RandomTree2);
         boolean deJureSubsetOfTrees = true;
         for(int j = 0; j <= range; j++){
@@ -213,22 +275,22 @@ public class FinSet2 {
   
     public static void main(String[] args) {
         //Get it?  Because arbor... arbitrary... tree...
-        BiTr Arbortrary1 = new Branch(3,
+        BiSeTr Arbortrary1 = new Branch(3,
                 (new Branch(1)), 
                 (new Branch(5,
                         (new Branch(4)),
                         (new Branch(7)))));
-        BiTr Arbortrary1v3 = new Branch(3,
+        BiSeTr Arbortrary1v3 = new Branch(3,
                 (new Branch(100)), 
                 (new Branch(5,
                         (new Branch(400)),
                         (new Branch(7)))));
-        BiTr Arbortrary1v2 = new Branch(3,
+        BiSeTr Arbortrary1v2 = new Branch(3,
                 (new Branch(1)), 
                 (new Branch(5,
                         (new Branch(4)),
                         (new Branch(7,new Branch(6), new Leaf())))));
-        BiTr EmpTree = new Leaf();
+        BiSeTr EmpTree = new Leaf();
         
         //Test Cardinality
         System.out.println("    Cardinality Test");
@@ -288,12 +350,13 @@ public class FinSet2 {
         checkInter(100,100);
         checkDiff(100,100);
         checkSubset(100,30);
-        checkTransitive(100);
+        checkSubsetTransitivity(100);
         checkProperty2(10,100);
         checkProperty3(10,100);
         checkProperty4(10,100);
+        checkProperty5(10,100);
+        checkProperty6(10,100);
         checkRandom();
-       
         
     }
     
